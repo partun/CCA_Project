@@ -2,13 +2,10 @@ import os
 import re
 import json
 
-
-# DIRECTORY_PATH = 'part2a/measurements_part2a'
-# RESULTS_FILE_NAME = 'realtime_results_part2a'
-DIRECTORY_PATH = 'part2b/measurements_part2b'
-RESULTS_FILE_NAME = 'realtime_results_part2b'
-
-
+DIRECTORY_PATH = 'part2a/measurements_part2a'
+RESULTS_FILE_NAME = 'realtime_results_part2a'
+# DIRECTORY_PATH = 'part2b/measurements_part2b'
+# RESULTS_FILE_NAME = 'realtime_results_part2b'
 
 
 def main() -> None:
@@ -35,7 +32,7 @@ def main() -> None:
                     results[file_name] = 60 * int(minutes) + float(seconds)
 
     with open(f'{DIRECTORY_PATH}/{RESULTS_FILE_NAME}.json', 'w') as result_file:
-        json.dump(results, result_file)
+        json.dump(results, result_file, indent=4)
 
 
 if __name__ == '__main__':
