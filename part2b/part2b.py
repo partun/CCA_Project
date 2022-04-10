@@ -14,8 +14,20 @@ def part2b():
 
     for workload in table:
         normalized = table[workload][1]
+
+
+        # for n in table[workload]:
+        #     table[workload][n] = table[workload][n] / normalized * n
+
         for n in table[workload]:
             table[workload][n] = normalized / table[workload][n]
+
+        # thread_count = list(sorted(table[workload].keys(), reverse=True))
+        # print(list(zip(thread_count, thread_count[1:])))
+        # for c, p in zip(thread_count, thread_count[1:]):
+        #     table[workload][c] = (table[workload][c] - table[workload][p]) / (c - p)
+
+
 
     print(table)
 
@@ -29,20 +41,33 @@ def plot(measurements):
     print(measurements)
 
     # Setup figure
-    fig = plt.figure()
+    fig = plt.figure(figsize=(10,5))
     fig_ax = fig.gca()
 
     # linear scaling
     fig_ax.errorbar(
         x=range(1, 13),
         y=range(1, 13),
-        # label='li',
+        label='linear speedup',
         linestyle='--',
         markersize=8,
         markerfacecolor="grey",
         color='grey',
         capsize=4
     )
+
+    # 50% scaling
+    fig_ax.errorbar(
+        x=range(1, 13),
+        y=[0.5 * i + 0.5 for i in range(1, 13)],
+        label='significant speedup',
+        linestyle=':',
+        markersize=8,
+        markerfacecolor="grey",
+        color='black',
+        capsize=4
+    )
+
 
     # Plot line
     for workload in measurements:
@@ -67,7 +92,7 @@ def plot(measurements):
     )
     fig_ax.set_xlabel("number of threads", fontsize=16)
     fig_ax.set_ylabel("normalized speedup", fontsize=16)
-    fig_ax.legend(loc='upper right', fontsize=12)
+    fig_ax.legend(loc='upper left', fontsize=14)
     fig_ax.grid(True, color='lightgray', linestyle='--', linewidth=1)
     fig_ax.tick_params(labelsize=12)
     fig_ax.set_xlim(left=1, right=13)
@@ -78,7 +103,7 @@ def plot(measurements):
 
     # Save plot
     plt.tight_layout()
-    plt.savefig("plot2b.pdf")
+    plt.savefig("measurements_part2b/plot2b.pdf")
 
 
 if __name__ == '__main__':
