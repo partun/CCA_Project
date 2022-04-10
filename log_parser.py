@@ -2,10 +2,10 @@ import os
 import re
 import json
 
-DIRECTORY_PATH = 'part2a/measurements_part2a'
-RESULTS_FILE_NAME = 'realtime_results_part2a'
-# DIRECTORY_PATH = 'part2b/measurements_part2b'
-# RESULTS_FILE_NAME = 'realtime_results_part2b'
+# DIRECTORY_PATH = 'part2a/measurements_part2a'
+# RESULTS_FILE_NAME = 'realtime_results_part2a'
+DIRECTORY_PATH = 'part2b/measurements_part2b'
+RESULTS_FILE_NAME = 'realtime_results_part2b'
 
 
 def main() -> None:

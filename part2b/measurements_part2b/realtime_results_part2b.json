@@ -1,1 +1,23 @@
-{"parsec_cannel_12": 125.167, "parsec_freqmine_3": 167.535, "parsec_dedup_12": 39.484, "parsec_freqmine_1": 489.564, "parsec_freqmine_6": 113.007, "parsec_fft_1": 158.988, "parsec_blackscholes_3": 96.084, "parsec_cannel_6": 129.59, "parsec_dedup_6": 21.996, "parsec_blackscholes_1": 246.072, "parsec_blackscholes_12": 62.139, "parsec_dedup_3": 20.718, "parsec_cannel_1": 321.58, "parsec_ferret_12": 189.018, "parsec_blackscholes_6": 70.159, "parsec_cannel_3": 157.40699999999998, "parsec_dedup_1": 51.293, "parsec_ferret_6": 195.722, "parsec_freqmine_12": 106.186, "parsec_ferret_1": 755.92, "parsec_ferret_3": 268.54}
+{
+    "parsec_canneal_12": 125.167,
+    "parsec_freqmine_3": 167.535,
+    "parsec_dedup_12": 39.484,
+    "parsec_freqmine_1": 489.564,
+    "parsec_freqmine_6": 113.007,
+    "parsec_fft_1": 158.988,
+    "parsec_blackscholes_3": 96.084,
+    "parsec_canneal_1": 321.58,
+    "parsec_dedup_6": 21.996,
+    "parsec_canneal_3": 157.40699999999998,
+    "parsec_blackscholes_1": 246.072,
+    "parsec_blackscholes_12": 62.139,
+    "parsec_dedup_3": 20.718,
+    "parsec_canneal_6": 129.59,
+    "parsec_ferret_12": 189.018,
+    "parsec_blackscholes_6": 70.159,
+    "parsec_dedup_1": 51.293,
+    "parsec_ferret_6": 195.722,
+    "parsec_freqmine_12": 106.186,
+    "parsec_ferret_1": 755.92,
+    "parsec_ferret_3": 268.54
+}
