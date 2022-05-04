@@ -1,0 +1,54 @@
+version: '3.2'
+services:
+  prometheus:
+    image: prom/prometheus:v2.30.3
+    restart: unless-stopped
+    container_name: prometheus
+    volumes:
+      - prometheus_data:/prometheus:rw
+      - ./prometheus/:/etc/prometheus:ro
+    ports:
+      - 9090:9090
+    cpuset: "0"
+
+  grafana:
+    image: grafana/grafana-oss:8.2.2
+    restart: unless-stopped
+    container_name: grafana
+    volumes:
+      - grafana-data:/var/lib/grafana:rw
+    ports:
+      - 3000:3000
+    cpuset: "0"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    container_name: cadvisor
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    ports:
+      - 8080:8080
+    
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    restart: unless-stopped
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    volumes:
+      - '/:/host:ro,rslave'
+    cpuset: "0"
+
+volumes:
+  prometheus_data:
+  grafana-data:
+
+

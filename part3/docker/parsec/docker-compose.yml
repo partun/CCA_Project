@@ -1,0 +1,48 @@
+version: '3.2'
+services:
+  # parsec_dedub:
+  #   image: anakli/parsec:dedup-native-reduced
+  #   restart: "no"
+  #   container_name: parsec_dedub
+  #   command: "./bin/parsecmgmt -a run -p dedup -i native -n 1"
+  #   cpuset: "2"
+  #   cpus: 1
+
+  parsec_fft:
+    image: anakli/parsec:splash2x-fft-native-reduced
+    restart: "no"
+    container_name: parsec_fft
+    command: "./bin/parsecmgmt -a run -p splash2x.fft -i native -n 2"
+    # cpuset: "2"
+    cpus: 2
+  # parsec_ferret:
+  #   image: anakli/parsec:ferret-native-reduced
+  #   restart: "no"
+  #   container_name: parsec_ferret
+  #   command: "./bin/parsecmgmt -a run -p ferret -i native -n 5"
+  #   # cpuset: "2,4,6,8"
+  #   cpus: 5
+
+  # parsec_blackscholes:
+  #   image: anakli/parsec:blackscholes-native-reduced
+  #   restart: "no"
+  #   container_name: parsec_blackscholes
+  #   command: "./bin/parsecmgmt -a run -p blackscholes -i native -n 2"
+  #   # cpuset: "2"
+  #   cpus: 2
+
+  # parsec_canneal:
+  #   image: anakli/parsec:canneal-native-reduced
+  #   restart: "no"
+  #   container_name: parsec_canneal
+  #   command: "./bin/parsecmgmt -a run -p canneal -i native -n 2"
+  #   # cpuset: "2"
+  #   cpus: 2
+
+  # parsec_freqmine:
+  #   image: anakli/parsec:freqmine-native-reduced
+  #   restart: "no"
+  #   container_name: parsec_freqmine
+  #   command: "./bin/parsecmgmt -a run -p freqmine -i native -n 3"
+  #   # cpuset: "2"
+  #   cpus: 3
