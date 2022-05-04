@@ -1,0 +1,139 @@
+# nodes: node-a-2core, node-b-4core, node-c-8core
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parsec-fft
+  labels:
+    name: pasec-fft
+spec:
+  template:
+    spec:
+      containers:
+        - image: anakli/parsec:splash2x-fft-native-reduced
+          name: parsec-fft
+          imagePullPolicy: Always
+          command: ["/bin/sh"]
+          args: ["-c", "./bin/parsecmgmt -a run -p splash2x.fft -i native -n 2"]
+          resources:
+            limits:
+              cpu: "2"
+
+      restartPolicy: Never
+      nodeSelector:
+        cca-project-nodetype: "node-b-4core"
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parsec-freqmine
+  labels:
+    name: pasec-freqmine
+spec:
+  template:
+    spec:
+      containers:
+        - image: anakli/parsec:freqmine-native-reduced
+          name: parsec-freqmine
+          imagePullPolicy: Always
+          command: ["/bin/sh"]
+          args: ["-c", "./bin/parsecmgmt -a run -p freqmine -i native -n 3"]
+          resources:
+            limits:
+              cpu: "3"
+      restartPolicy: Never
+      nodeSelector:
+        cca-project-nodetype: "node-c-8core"
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parsec-canneal
+  labels:
+    name: pasec-canneal
+spec:
+  template:
+    spec:
+      containers:
+        - image: anakli/parsec:canneal-native-reduced
+          name: parsec-canneal
+          imagePullPolicy: Always
+          command: ["/bin/sh"]
+          args: ["-c", "./bin/parsecmgmt -a run -p canneal -i native -n 2"]
+          resources:
+            limits:
+              cpu: "2"
+      restartPolicy: Never
+      nodeSelector:
+        cca-project-nodetype: "node-a-2core"
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parsec-blackscholes
+  labels:
+    name: pasec-blackscholes
+spec:
+  template:
+    spec:
+      containers:
+        - image: anakli/parsec:blackscholes-native-reduced
+          name: parsec-blackscholes
+          imagePullPolicy: Always
+          command: ["/bin/sh"]
+          args: ["-c", "./bin/parsecmgmt -a run -p blackscholes -i native -n 1"]
+          resources:
+            limits:
+              cpu: "1"
+      restartPolicy: Never
+      nodeSelector:
+        cca-project-nodetype: "node-b-4core"
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parsec-dedup
+  labels:
+    name: pasec-dedup
+spec:
+  template:
+    spec:
+      containers:
+        - image: anakli/parsec:dedup-native-reduced
+          name: parsec-dedup
+          imagePullPolicy: Always
+          command: ["/bin/sh"]
+          args: ["-c", "./bin/parsecmgmt -a run -p dedup -i native -n 1"]
+          resources:
+            limits:
+              cpu: "1"
+      restartPolicy: Never
+      nodeSelector:
+        cca-project-nodetype: "node-b-4core"
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parsec-ferret
+  labels:
+    name: pasec-ferret
+spec:
+  template:
+    spec:
+      containers:
+        - image: anakli/parsec:ferret-native-reduced
+          name: parsec-ferret
+          imagePullPolicy: Always
+          command: ["/bin/sh"]
+          args: ["-c", "./bin/parsecmgmt -a run -p ferret -i native -n 4"]
+          resources:
+            limits:
+              cpu: "4"
+      restartPolicy: Never
+      nodeSelector:
+        cca-project-nodetype: "parsec"
