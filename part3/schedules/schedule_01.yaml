@@ -136,4 +136,4 @@ spec:
               cpu: "4"
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "parsec"
+        cca-project-nodetype: "node-c-8core"
