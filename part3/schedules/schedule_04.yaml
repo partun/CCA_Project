@@ -13,14 +13,14 @@ spec:
           name: parsec-fft
           imagePullPolicy: Always
           command: ["/bin/sh"]
-          args: ["-c", "./bin/parsecmgmt -a run -p splash2x.fft -i native -n 2"]
+          args: ["-c", "./bin/parsecmgmt -a run -p splash2x.fft -i native -n 1"]
           # resources:
           #   limits:
           #     cpu: "2"
 
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "node-b-4core"
+        cca-project-nodetype: "node-c-8core"
 
 ---
 apiVersion: batch/v1
@@ -83,13 +83,13 @@ spec:
           name: parsec-blackscholes
           imagePullPolicy: Always
           command: ["/bin/sh"]
-          args: ["-c", "./bin/parsecmgmt -a run -p blackscholes -i native -n 1"]
+          args: ["-c", "./bin/parsecmgmt -a run -p blackscholes -i native -n 2"]
           # resources:
           #   limits:
           #     cpu: "1"
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "node-b-4core"
+        cca-project-nodetype: "node-c-8core"
 
 ---
 apiVersion: batch/v1
@@ -112,7 +112,7 @@ spec:
           #     cpu: "1"
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "node-b-4core"
+        cca-project-nodetype: "node-c-8core"
 
 ---
 apiVersion: batch/v1
@@ -135,4 +135,4 @@ spec:
           #     cpu: "4"
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "node-c-8core"
+        cca-project-nodetype: "node-b-4core"

@@ -13,7 +13,7 @@ spec:
           name: parsec-fft
           imagePullPolicy: Always
           command: ["/bin/sh"]
-          args: ["-c", "./bin/parsecmgmt -a run -p splash2x.fft -i native -n 2"]
+          args: ["-c", "./bin/parsecmgmt -a run -p splash2x.fft -i native -n 1"]
           # resources:
           #   limits:
           #     cpu: "2"
@@ -43,7 +43,7 @@ spec:
           #     cpu: "3"
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "node-c-8core"
+        cca-project-nodetype: "node-b-4core"
 
 ---
 apiVersion: batch/v1
@@ -89,7 +89,7 @@ spec:
           #     cpu: "1"
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "node-b-4core"
+        cca-project-nodetype: "node-c-8core"
 
 ---
 apiVersion: batch/v1
@@ -112,7 +112,7 @@ spec:
           #     cpu: "1"
       restartPolicy: Never
       nodeSelector:
-        cca-project-nodetype: "node-b-4core"
+        cca-project-nodetype: "node-c-8core"
 
 ---
 apiVersion: batch/v1
@@ -129,7 +129,7 @@ spec:
           name: parsec-ferret
           imagePullPolicy: Always
           command: ["/bin/sh"]
-          args: ["-c", "./bin/parsecmgmt -a run -p ferret -i native -n 4"]
+          args: ["-c", "./bin/parsecmgmt -a run -p ferret -i native -n 5"]
           # resources:
           #   limits:
           #     cpu: "4"
