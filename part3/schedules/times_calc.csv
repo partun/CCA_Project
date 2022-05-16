@@ -1,0 +1,7 @@
+workload;avg_seconds;std_dev
+dedup;69.6667;0.9428
+blackscholes;204.6667;1.2472
+ferret;274.3333;0.4714
+freqmine;203.0000;0.8165
+canneal;230.0000;1.6330
+fft;131.3333;2.0548
