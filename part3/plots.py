@@ -58,7 +58,8 @@ def plot3a(run_index: int):
     )
 
     colors = ('blue', 'orange', 'green', 'red', 'purple', 'pink')
-    for i, (_, workload) in enumerate(sorted(workload_times.iterrows(), key=lambda x: x[1]['start'])):
+    workloads = (2, 4, 1, 3, 5, 0)
+    for j, i in enumerate(workloads):
         # fig_ax.plot(
         #     [workload['start'], workload['start']],
         #     [0, 1000],
@@ -67,11 +68,13 @@ def plot3a(run_index: int):
         #     markerfacecolor="none",
         # )
 
+        print(workload_times['workload'][i])
+
         fig_ax.broken_barh(
-            [(workload['start'], workload['end'])],
-            (0.1 * i, 0.1),
-            label=workload['workload'],
-            facecolors=colors[i]
+            [(workload_times['start'][i], workload_times['end'][i])],
+            (0.1 * j, 0.1),
+            label=workload_times['workload'][i],
+            facecolors=colors[j]
         )
         pass
 
@@ -98,7 +101,7 @@ def plot3a(run_index: int):
     #     fontweight="bold",
     #     pad=10
     # )
-    fig_ax.set_xlabel("Time", fontsize=16)
+    fig_ax.set_xlabel("Time (s)", fontsize=16)
     fig_ax.set_ylabel("95th %-tile response time (ms)", fontsize=16)
     fig_ax.legend(loc='upper right', fontsize=14)
     fig_ax.grid(True, color='lightgray', linestyle='--', linewidth=1)

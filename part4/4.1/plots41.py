@@ -51,7 +51,7 @@ def plot41a(run_cnt=3):
     fig_ax.grid(True, color='lightgray', linestyle='--', linewidth=1)
     fig_ax.tick_params(labelsize=12)
     fig_ax.set_xlim(left=0, right=125000)
-    fig_ax.set_ylim(bottom=0, top=2)
+    fig_ax.set_ylim(bottom=0, top=1.75)
     # fig_ax.set_yticks(range(0, 11, 1))
     # fig_ax.set_xticks(range(0, 80001, 10000), labelrotation=45)
     # fig_ax.set_xticks(range(0, 80001, 5000), minor=True)
@@ -67,7 +67,7 @@ def plot41d(run_cnt=3):
     fig_ax = fig.gca()
     fig_ax2 = fig_ax.twinx()
 
-    for t, c in product((1, 2), (1, 2)):
+    for t, c in product((2,), (1, 2)):
 
         start_times = []
         cpu_usage = []
@@ -115,21 +115,25 @@ def plot41d(run_cnt=3):
 
         cpu_start = []
         cpu_y = []
+        cpu_max = []
         for start, end in zip(mem_start.mean(axis=1), mem_end.mean(axis=1)):
             usage_sum = 0
+            usage_max = 0
             cnt = 0
             for i in range(run_cnt):
                 for i, measurement in cpu_usage[i].iterrows():
                     if start <= measurement['timestamp'] <= end:
+                        usage_max = max(usage_max, measurement['cpu'])
                         usage_sum += measurement['cpu']
                         cnt += 1
 
             cpu_start.append(start)
             cpu_y.append(usage_sum / cnt)
+            cpu_max.append(usage_max)
 
         fig_ax2.errorbar(
             x=cpu_start,
-            y=cpu_y,
+            y=cpu_max,
             # xerr=cpu_x.std(axis=1),
             # yerr=cpu_y.std(axis=1),
             label=f'CPU T={t}, C={c}',
@@ -140,29 +144,29 @@ def plot41d(run_cnt=3):
             capsize=4
         )
 
-    # fig_ax.plot(
-    #     [0, 160],
-    #     [1.5, 1.5],
-    #     linestyle=':',
-    #     label='SLO'
-    # )
+    fig_ax.plot(
+        [0, 160],
+        [1.5, 1.5],
+        linestyle=':',
+        label='SLO'
+    )
 
-    fig_ax.set_xlabel("Time", fontsize=16)
+    fig_ax.set_xlabel("Time (s)", fontsize=16)
     fig_ax.set_ylabel("95th %-tile response time (ms)", fontsize=16)
     fig_ax.legend(loc='upper left', fontsize=12)
     fig_ax.grid(True, color='lightgray', linestyle='--', linewidth=1)
     fig_ax.tick_params(labelsize=12)
 
     fig_ax.set_xlim(left=-5, right=165)
-    fig_ax.set_ylim(bottom=0, top=1.6)
+    fig_ax.set_ylim(bottom=0, top=1.8)
     # fig_ax.set_yticks(range(0, 11, 1))
     # fig_ax.set_xticks(range(0, 80001, 10000), labelrotation=45)
     # fig_ax.set_xticks(range(0, 80001, 5000), minor=True)
 
     fig_ax2.legend(loc='lower right', fontsize=12)
     fig_ax2.set_ylabel("CPU usage (%)", fontsize=16)
-    fig_ax2.set_ylim(bottom=0, top=160)
-    fig_ax2.set_yticks(range(0, 161, 20))
+    fig_ax2.set_ylim(bottom=0, top=180)
+    fig_ax2.set_yticks(range(0, 181, 20))
 
     # Save plot
     plt.tight_layout()
