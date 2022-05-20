@@ -15,15 +15,15 @@ def plot3a(run_index: int):
     with open(f'schedules/memcached_log_03_run{run_index:d}.csv') as log_file:
         memcached_qos = pd.read_csv(log_file, delim_whitespace=True, header=1)
 
+    interval = timedelta(seconds=20)
     with open(f'schedules/memcached_log_03_run{run_index:d}.csv') as log_file:
         for line in log_file.readlines():
             start_time = datetime.strptime(
-                line[:-1], r"%a %b  %d %H:%M:%S %Z %Y")
+                line[:-1], r"%a %b  %d %H:%M:%S %Z %Y") + interval
             break
 
-    interval = timedelta(seconds=20)
     memcached_qos['timestamp'] = pd.Series((
-        (i + 1) * 20 for i in range(memcached_qos.shape[0])
+        i * 20 for i in range(memcached_qos.shape[0])
     ))
 
     def convert_to_relative_time(time_str):
@@ -58,7 +58,7 @@ def plot3a(run_index: int):
     )
 
     colors = ('blue', 'orange', 'green', 'red', 'purple', 'pink')
-    workloads = (2, 4, 1, 3, 5, 0)
+    workloads = reversed((2, 4, 1, 3, 5, 0))
     for j, i in enumerate(workloads):
         # fig_ax.plot(
         #     [workload['start'], workload['start']],
@@ -71,7 +71,8 @@ def plot3a(run_index: int):
         print(workload_times['workload'][i])
 
         fig_ax.broken_barh(
-            [(workload_times['start'][i], workload_times['end'][i])],
+            [(workload_times['start'][i],
+              workload_times['duration_seconds'][i])],
             (0.1 * j, 0.1),
             label=workload_times['workload'][i],
             facecolors=colors[j]
@@ -101,12 +102,12 @@ def plot3a(run_index: int):
     #     fontweight="bold",
     #     pad=10
     # )
-    fig_ax.set_xlabel("Time (s)", fontsize=16)
-    fig_ax.set_ylabel("95th %-tile response time (ms)", fontsize=16)
-    fig_ax.legend(loc='upper right', fontsize=14)
+    fig_ax.set_xlabel("Time (s)", fontsize=14)
+    fig_ax.set_ylabel("95th %-tile response time (ms)", fontsize=14)
+    fig_ax.legend(loc='lower right', fontsize=10)
     fig_ax.grid(True, color='lightgray', linestyle='--', linewidth=1)
     # fig_ax.tick_params(labelsize=12)
-    fig_ax.set_xlim(left=0, right=350)
+    fig_ax.set_xlim(left=0, right=300)
     fig_ax.set_ylim(bottom=0, top=0.6)
     # fig_ax.set_yticks(range(0, 11, 1))
     # fig_ax.set_xticks(range(0, 80001, 10000), labelrotation=45)
