@@ -157,7 +157,7 @@ def plot41d(run_cnt=3):
         )
 
         fig_ax.plot(
-            [0, 160],
+            [0, 120000],
             [1.5, 1.5],
             linestyle=':',
             label='SLO'
@@ -169,7 +169,7 @@ def plot41d(run_cnt=3):
         fig_ax.grid(True, color='lightgray', linestyle='--', linewidth=1)
         fig_ax.tick_params(labelsize=12)
 
-        fig_ax.set_xlim(left=0, right=120000)
+        fig_ax.set_xlim(left=0, right=125000)
         fig_ax.set_ylim(bottom=0, top=1.8)
 
         fig_ax.set_xticks(range(0, 120001, 20000),
