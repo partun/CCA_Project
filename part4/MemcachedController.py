@@ -3,8 +3,8 @@ import DockerController
 from threading import Thread
 
 class MemcachedController:
-    def __init__(self, cpu_poll_interval:int, cpu_poll_amt:int,  threshhold_up:float, threshhold_down:float, memcached_pid:int):
-        self.dc = DockerController()
+    def __init__(self, cpu_poll_interval:float, cpu_poll_amt:int,  threshhold_up:float, threshhold_down:float, memcached_pid:int):
+        self.dc = DockerController.DockerController()
         self.is_two_core = False
         self.cpu_poll_interval = cpu_poll_interval
         self.cpu_poll_amt = cpu_poll_amt
@@ -28,7 +28,7 @@ class MemcachedController:
         self.dc.switch_core()
     
     def run_monitor(self) -> Thread:
-        def run_controller(self):
+        def run_controller():
             self.process.cpu_affinity([3]) #make sure memcached runs on core 0 if not already started with            
             #self.process.cpu_affinity([0]) #make sure memcached runs on core 0 if not already started with
 
@@ -46,15 +46,22 @@ class MemcachedController:
 
                 maxUsage = max(usages) #instead of replacing this with 'avg' we could just redo the part above and use a larger cpu_poll_interval and do a choice after every poll
                 if (self.is_two_core) and (maxUsage < self.threshhold_down):    #if we are on 2 cores and the maxUsage drops below threshhold_down we switch to 1 core
-                    self.set_1core(self)
+                    self.set_1core()
                 elif (not self.is_two_core) and (maxUsage > self.threshhold_up):#if we are on 1 core1 and the maxUsage goes above threshhold_up we switch to 2 cores
-                    self.set_2core(self)
+                    self.set_2core()
 
         thread = Thread(target=run_controller)
         thread.start()
         return thread
 
     def run(self):
-        mcThread = self.run_monitor(self)
+        mcThread = self.run_monitor()
         self.dc.run_sequential().join()
+        print("FINISHED")
         mcThread.join()
+
+if __name__ == '__main__':
+
+    #self, cpu_poll_interval:int, cpu_poll_amt:int,  threshhold_up:float, threshhold_down:float, memcached_pid:int
+    mc = MemcachedController(0.4,5,90,140,3393) #make this accept parameters
+    mc.run()

@@ -19,7 +19,7 @@ class DockerController:
 
         self.max_cpus_per_workload = 3
         self.available_cpus = 3
-        self.next_workload_index = 4 #why this start index?
+        self.next_workload_index = 0 #why this start index?
         self.running_container = None
 
     @staticmethod
@@ -135,5 +135,5 @@ def test():
     d.run_sequential().join()
 
 
-if __name__ == '__main__':
-    test()
+#if __name__ == '__main__':
+#    test()
