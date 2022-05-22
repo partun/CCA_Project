@@ -19,7 +19,7 @@ class DockerController:
 
         self.max_cpus_per_workload = 3
         self.available_cpus = 3
-        self.next_workload_index = 4
+        self.next_workload_index = 4 #why this start index?
         self.running_container = None
 
     @staticmethod
@@ -122,6 +122,10 @@ class DockerController:
         thread = Thread(target=wait_to_run_next_container)
         thread.start()
         return thread
+
+    def switch_core(self):
+        cpuset = self.get_cpuset_str(self.available_cpus)
+        self.update_cpu_set(self.running_container, cpuset)
 
 
 def test():
