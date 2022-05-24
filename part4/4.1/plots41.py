@@ -44,7 +44,8 @@ def plot41a(run_cnt=3):
         [0, 125000],
         [1.5, 1.5],
         linestyle=':',
-        label='SLO'
+        label='SLO',
+        color='tab:grey'
     )
 
     fig_ax.set_xlabel("QPS", fontsize=16)
@@ -157,10 +158,11 @@ def plot41d(run_cnt=3):
         )
 
         fig_ax.plot(
-            [0, 120000],
+            [0, 125000],
             [1.5, 1.5],
             linestyle=':',
-            label='SLO'
+            label='SLO',
+            color='tab:grey'
         )
 
         fig_ax.set_xlabel("QPS", fontsize=16)
@@ -170,7 +172,7 @@ def plot41d(run_cnt=3):
         fig_ax.tick_params(labelsize=12)
 
         fig_ax.set_xlim(left=0, right=125000)
-        fig_ax.set_ylim(bottom=0, top=1.8)
+        fig_ax.set_ylim(bottom=0, top=1.65)
 
         fig_ax.set_xticks(range(0, 120001, 20000),
                           labels=(f'{i}k' for i in range(0, 121, 20)))
@@ -182,8 +184,16 @@ def plot41d(run_cnt=3):
         fig.legend(
             loc='lower right', fontsize=12, bbox_to_anchor=(0.92, 0.14))
         fig_ax2.set_ylabel("CPU usage (%)", fontsize=16)
-        fig_ax2.set_ylim(bottom=0, top=180)
-        fig_ax2.set_yticks(range(0, 181, 20))
+
+        if c == 2:
+            fig_ax2.set_ylim(bottom=0, top=206.25)
+            fig_ax2.set_yticks(range(0, 201, 25))
+            # fig_ax2.set_yticks(range(0, 201, 20))
+
+        else:
+            fig_ax2.set_ylim(bottom=0, top=103.125)
+            fig_ax2.set_yticks(range(0, 101, 25))
+            # fig_ax2.set_yticks(range(0, 101, 10))
 
         # Save plot
         plt.tight_layout()

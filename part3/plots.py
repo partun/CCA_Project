@@ -47,16 +47,6 @@ def plot3a(run_index: int):
     fig = plt.figure(figsize=(10, 5))
     fig_ax = fig.gca()
 
-    # Plot line
-    fig_ax.plot(
-        memcached_qos['timestamp'],
-        memcached_qos['p95'] / 1000,
-        label='p95',
-        marker="o",
-        markersize=8,
-        markerfacecolor="none",
-    )
-
     colors = ('blue', 'orange', 'green', 'red', 'purple', 'pink')
     workloads = reversed((2, 4, 1, 3, 5, 0))
     for j, i in enumerate(workloads):
@@ -75,9 +65,27 @@ def plot3a(run_index: int):
               workload_times['duration_seconds'][i])],
             (0.1 * j, 0.1),
             label=workload_times['workload'][i],
-            facecolors=colors[j]
+            facecolors=colors[j],
+            url='adf'
+        )
+        fig_ax.text(
+            workload_times['start'][i],
+            0.1*j + 0.05,
+            f"  {workload_times['workload'][i]}: {workload_times['start'][i]:.0f}s",
+            va='center',
+            zorder=1
         )
         pass
+
+    # Plot line
+    fig_ax.plot(
+        memcached_qos['timestamp'],
+        memcached_qos['p95'] / 1000,
+        label='p95',
+        marker="o",
+        markersize=8,
+        markerfacecolor="none",
+    )
 
     # workloads = sorted(workload_times.iterrows(),
     #                    key=lambda x: x[1]['end'], reverse=True)
