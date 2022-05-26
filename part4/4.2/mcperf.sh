@@ -15,22 +15,22 @@ exit 0
 # client-measure
 
 # 4.2
-./mcperf -s INTERNAL_MEMCACHED_IP --loadonly
-./mcperf -s INTERNAL_MEMCACHED_IP -a INTERNAL_AGENT_IP \
+./mcperf -s  10.156.15.206 --loadonly
+./mcperf -s  10.156.15.206 -a 10.156.15.205 \
 --noload -T 16 -C 4 -D 4 -Q 1000 -c 4 -t 1800 \
 --qps_interval 10 --qps_min 5000 --qps_max 100000
 
 # 4.3
-./mcperf -s INTERNAL_MEMCACHED_IP --loadonly
-./mcperf -s INTERNAL_MEMCACHED_IP -a INTERNAL_AGENT_IP \
---noload -T 16 -C 4 -D 4 -Q 1000 -c 4 -t 1800 \
+./mcperf -s  10.156.15.206 --loadonly
+date && ./mcperf -s  10.156.15.206 -a 10.156.15.205 \
+--noload -T 16 -C 4 -D 4 -Q 1000 -c 4 -t 1500 \
 --qps_interval 10 --qps_min 5000 --qps_max 100000 \
 --qps_seed 42
 
 # 4.4
-./mcperf -s INTERNAL_MEMCACHED_IP --loadonly
-./mcperf -s INTERNAL_MEMCACHED_IP -a INTERNAL_AGENT_IP \
---noload -T 16 -C 4 -D 4 -Q 1000 -c 4 -t 1800 \
+./mcperf -s  10.156.15.206 --loadonly
+date && ./mcperf -s  10.156.15.206 -a 10.156.15.205 \
+--noload -T 16 -C 4 -D 4 -Q 1000 -c 4 -t 1500 \
 --qps_interval 5 --qps_min 5000 --qps_max 100000 \
 --qps_seed 42
 

@@ -14,9 +14,9 @@ sudo systemctl status memcached
 
 
 # docker
-sudo ducker pull anakli/parsec:dedup-native-reduced
-sudo ducker pull anakli/parsec:splash2x-fft-native-reduced
-sudo ducker pull anakli/parsec:ferret-native-reduced
-sudo ducker pull anakli/parsec:blackscholes-native-reduced
-sudo ducker pull anakli/parsec:canneal-native-reduced
-sudo ducker pull anakli/parsec:freqmine-native-reduced
+sudo docker pull anakli/parsec:dedup-native-reduced
+sudo docker pull anakli/parsec:splash2x-fft-native-reduced
+sudo docker pull anakli/parsec:ferret-native-reduced
+sudo docker pull anakli/parsec:blackscholes-native-reduced
+sudo docker pull anakli/parsec:canneal-native-reduced
+sudo docker pull anakli/parsec:freqmine-native-reduced

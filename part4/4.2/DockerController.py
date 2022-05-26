@@ -125,23 +125,28 @@ class SequentialDockerController(DockerController):
                 print(f'starting {workload}...')
                 self.stats[workload] = {'start': time()}
                 if self._high_qps_mode:
-                    self.container = start_func(threads=3, cpuset=self.high_qps_cpu_set)
+                    self.container = start_func(
+                        threads=3, cpuset=self.high_qps_cpu_set)
                 else:
-                    self.container = start_func(threads=3, cpuset=self.low_qps_cpu_set)
+                    self.container = start_func(
+                        threads=3, cpuset=self.low_qps_cpu_set)
 
             return_core = self.container.wait()
             self.stats[workload]['end'] = time()
-            self.stats[workload]['duration'] = self.stats[workload]['end'] - self.stats[workload]['start']
-            print(f'{workload} duration: {self.stats[workload]["duration"]:.2f}s finished: {return_core}')
+            self.stats[workload]['duration'] = self.stats[workload]['end'] - \
+                self.stats[workload]['start']
+            print(
+                f'{workload} duration: {self.stats[workload]["duration"]:.2f}s finished: {return_core}')
 
         self.stats['total']['end'] = time()
-        self.stats['total']['duration'] = self.stats['total']['end'] - self.stats['total']['start']
+        self.stats['total']['duration'] = self.stats['total']['end'] - \
+            self.stats['total']['start']
         pprint(self.stats)
 
 
 class SwitchingDockerController(DockerController):
     def __init__(self):
-        self.exec_idx = 4
+        self.exec_idx = 0
         self.high_qps_container = None
         self.low_qps_container = None
         self.finishing = False
@@ -176,7 +181,8 @@ class SwitchingDockerController(DockerController):
         with self._mode_change_lock:
             if not self.finishing:
                 if self.low_qps_tasks_remaining:
-                    self.low_qps_container.update(cpuset_cpus=self.high_qps_cpu_set)
+                    self.low_qps_container.update(
+                        cpuset_cpus=self.high_qps_cpu_set)
                 self.pause(self.low_qps_container)
                 self.unpause(self.high_qps_container)
             self._high_qps_mode = True
@@ -185,7 +191,8 @@ class SwitchingDockerController(DockerController):
         with self._mode_change_lock:
             if not self.finishing:
                 if self.low_qps_tasks_remaining:
-                    self.low_qps_container.update(cpuset_cpus=self.low_qps_cpu_set)
+                    self.low_qps_container.update(
+                        cpuset_cpus=self.low_qps_cpu_set)
                 self.pause(self.high_qps_container)
                 self.unpause(self.low_qps_container)
             self._high_qps_mode = False
@@ -208,13 +215,16 @@ class SwitchingDockerController(DockerController):
                     workload, start_func = self.execution_ord[self.exec_idx]
                     print(f'starting lqps {workload}...')
                     self.stats[workload] = {'start': time()}
-                    self.low_qps_container = start_func(threads=3, cpuset=self.low_qps_cpu_set)
+                    self.low_qps_container = start_func(
+                        threads=3, cpuset=self.low_qps_cpu_set)
                     self.exec_idx += 1
 
                 return_core = self.low_qps_container.wait()
                 self.stats[workload]['end'] = time()
-                self.stats[workload]['duration'] = self.stats[workload]['end'] - self.stats[workload]['start']
-                print(f'{workload} duration: {self.stats[workload]["duration"]:.2f}s finished: {return_core}')
+                self.stats[workload]['duration'] = self.stats[workload]['end'] - \
+                    self.stats[workload]['start']
+                print(
+                    f'{workload} duration: {self.stats[workload]["duration"]:.2f}s finished: {return_core}')
 
         def high_qps_waiter():
             while True:
@@ -227,28 +237,33 @@ class SwitchingDockerController(DockerController):
                         self.finishing = True
                         self.low_qps_tasks_remaining = True
                         if self._high_qps_mode:
-                            self.low_qps_container.update(cpuset_cpus=self.high_qps_cpu_set)
+                            self.low_qps_container.update(
+                                cpuset_cpus=self.high_qps_cpu_set)
                         self.unpause(self.low_qps_container)
                         return
 
                     workload, start_func = self.execution_ord[self.exec_idx]
                     print(f'starting hqps {workload}...')
                     self.stats[workload] = {'start': time()}
-                    self.high_qps_container = start_func(threads=2, cpuset=self.high_qps_cpu_set)
+                    self.high_qps_container = start_func(
+                        threads=2, cpuset=self.high_qps_cpu_set)
                     self.pause(self.high_qps_container)
                     self.exec_idx += 1
 
                 return_core = self.high_qps_container.wait()
                 self.stats[workload]['end'] = time()
-                self.stats[workload]['duration'] = self.stats[workload]['end'] - self.stats[workload]['start']
-                print(f'{workload} duration: {self.stats[workload]["duration"]:.2f}s finished: {return_core}')
+                self.stats[workload]['duration'] = self.stats[workload]['end'] - \
+                    self.stats[workload]['start']
+                print(
+                    f'{workload} duration: {self.stats[workload]["duration"]:.2f}s finished: {return_core}')
 
         thread = Thread(target=high_qps_waiter, daemon=True)
         thread.start()
         low_qps_waiter()
         thread.join()
         self.stats['total']['end'] = time()
-        self.stats['total']['duration'] = self.stats['total']['end'] - self.stats['total']['start']
+        self.stats['total']['duration'] = self.stats['total']['end'] - \
+            self.stats['total']['start']
         pprint(self.stats)
 
 
@@ -263,12 +278,18 @@ def test():
 def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('-p', '--pid', type=int, help='memcached process id')
-    parser.add_argument('-m', "--mode", type=int, default=0, help="select mode")
-    parser.add_argument('-i', "--interval", type=float, default=0.4, help="cpu usage sampling interval")
-    parser.add_argument('-n', "--amt", type=int, default=5, help="number of cpu usage samples")
-    parser.add_argument('-u', "--high_qps_threshold", type=float, default=90, help="")
-    parser.add_argument('-l', "--low_qps_threshold", type=float, default=140, help="")
-    parser.add_argument('-t', "--min_duration", type=float, default=10, help="")
+    parser.add_argument('-m', "--mode", type=int,
+                        default=0, help="select mode")
+    parser.add_argument('-i', "--interval", type=float,
+                        default=0.15, help="cpu usage sampling interval")
+    parser.add_argument('-n', "--amt", type=int, default=5,
+                        help="number of cpu usage samples")
+    parser.add_argument('-u', "--high_qps_threshold",
+                        type=float, default=95, help="")
+    parser.add_argument('-l', "--low_qps_threshold",
+                        type=float, default=140, help="")
+    parser.add_argument('-t', "--min_duration",
+                        type=float, default=5, help="")
 
     args = parser.parse_args()
 
