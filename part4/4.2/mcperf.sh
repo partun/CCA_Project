@@ -28,9 +28,14 @@ date && ./mcperf -s  10.156.15.206 -a 10.156.15.205 \
 --qps_seed 42
 
 # 4.4
-./mcperf -s  10.156.15.206 --loadonly
-date && ./mcperf -s  10.156.15.206 -a 10.156.15.205 \
+./mcperf -s  10.156.15.210 --loadonly
+date && ./mcperf -s  10.156.15.210 -a 10.156.15.208 \
 --noload -T 16 -C 4 -D 4 -Q 1000 -c 4 -t 1500 \
 --qps_interval 5 --qps_min 5000 --qps_max 100000 \
+--qps_seed 42
+
+date && ./mcperf -s  10.156.15.210 -a 10.156.15.208 \
+--noload -T 16 -C 4 -D 4 -Q 1000 -c 4 -t 1800 \
+--qps_interval 3 --qps_min 5000 --qps_max 100000 \
 --qps_seed 42
 

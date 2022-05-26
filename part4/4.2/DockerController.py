@@ -281,15 +281,15 @@ def main():
     parser.add_argument('-m', "--mode", type=int,
                         default=0, help="select mode")
     parser.add_argument('-i', "--interval", type=float,
-                        default=0.15, help="cpu usage sampling interval")
-    parser.add_argument('-n', "--amt", type=int, default=5,
+                        default=0.3, help="cpu usage sampling interval")
+    parser.add_argument('-n', "--amt", type=int, default=2,
                         help="number of cpu usage samples")
     parser.add_argument('-u', "--high_qps_threshold",
                         type=float, default=95, help="")
     parser.add_argument('-l', "--low_qps_threshold",
                         type=float, default=140, help="")
     parser.add_argument('-t', "--min_duration",
-                        type=float, default=5, help="")
+                        type=float, default=4, help="")
 
     args = parser.parse_args()
 

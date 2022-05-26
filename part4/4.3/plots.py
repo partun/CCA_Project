@@ -1,18 +1,47 @@
 import json
 from pprint import pprint
+import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta, time
 import matplotlib.pyplot as plt
 import re
 
 
-def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: float, type_A=True):
+def calc_stats(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: float, exercise: str, type_A=True):
+    """
+    calc mean and sdt over the 3 runs
+    """
+
+    summaries = []
+    for run in range(1, run_cnt + 1):
+        with open(f'{folder_path}/summary_{schedule}_{run}.json', 'r') as summary_file:
+            summaries.append(json.load(summary_file))
+
+    results = dict()
+    for key in summaries[0]:
+
+        durations = [summaries[i][key]['duration'] for i in range(run_cnt)]
+        results[key] = {
+            'mean_duration': f'{np.mean(durations):.2f}',
+            'sdt': f'{np.std(durations):.2f}'
+        }
+
+    pprint(results)
+
+
+def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: float, exercise: str, type_A=True):
 
     for run in range(1, run_cnt + 1):
         with open(f'{folder_path}/summary_{schedule}_{run}.json', 'r') as summary_file:
             summary = json.load(summary_file)
 
         start_time = summary['total']['start']
+        end_time = summary['total']['end']
+        total_duration = summary['total']['duration']
+
+        with open(f'{folder_path}/mcperf_{schedule}_{run}', 'r') as mcperf_file:
+            qps = pd.read_csv(mcperf_file, delim_whitespace=True,
+                              skiprows=7, skipfooter=11)
 
         mode_switching_time = [-100]
         mode_switching_value = [1]
@@ -20,13 +49,15 @@ def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: floa
             for line in controller_file.readlines():
                 match_low_qps = re.search(r'(\d+.\d+): low qps mode', line)
                 if match_low_qps:
-                    mode_switching_time.append(float(match_low_qps.group(1)) - start_time)
+                    mode_switching_time.append(
+                        float(match_low_qps.group(1)) - start_time)
                     mode_switching_value.append(1)
                     continue
 
                 match_low_qps = re.search(r'(\d+.\d+): high qps mode', line)
                 if match_low_qps:
-                    mode_switching_time.append(float(match_low_qps.group(1)) - start_time)
+                    mode_switching_time.append(
+                        float(match_low_qps.group(1)) - start_time)
                     mode_switching_value.append(2)
         mode_switching_time.append(1500)
         mode_switching_value.append(1)
@@ -38,13 +69,21 @@ def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: floa
                     mcperf_start_time = int(match_start.group(1)) / 1000
                     break
 
-        with open(f'{folder_path}/mcperf_{schedule}_{run}', 'r') as mcperf_file:
-            qps = pd.read_csv(mcperf_file, delim_whitespace=True, skiprows=7, skipfooter=11)
-
         print(mcperf_start_time - start_time)
         qps['timestamp'] = pd.Series(
-            [mcperf_start_time - start_time + (i) * mcperf_interval for i in range(len(qps['QPS']))]
+            [mcperf_start_time - start_time +
+                (i) * mcperf_interval for i in range(len(qps['QPS']))]
         )
+
+        # remove data after the last parsec job has finished
+        needed_data = len(qps['timestamp'][qps['timestamp'] <= total_duration])
+        print(qps['timestamp'][needed_data])
+        qps = qps.head(needed_data)
+
+        violation_ration = len(
+            qps['p95'][qps['p95'] > 1500]) / len(qps['p95']) * 100
+        print(
+            f'SLO violation ration s{schedule}r{run_cnt} {violation_ration:.3f}%')
 
         # Setup figure
         fig = plt.figure(figsize=(10, 5))
@@ -94,7 +133,7 @@ def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: floa
         fig_ax2.bar(
             qps['timestamp'],
             qps['QPS'] / 1000,
-            width=10,
+            width=mcperf_interval,
             label='QPS',
             # marker="o",
             # markersize=8,
@@ -177,7 +216,7 @@ def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: floa
     # )
 
         fig_ax.set_title(
-            f"4.3) {run}{'A' if type_A else 'B'}",
+            f"{exercise}) {run}{'A' if type_A else 'B'}",
             fontsize=14,
             fontweight="bold",
             pad=10
@@ -196,27 +235,38 @@ def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: floa
         if type_A:
             fig_ax.set_ylabel("95th %-tile response time (ms)", fontsize=14)
 
-            fig_ax.set_ylim(bottom=-0.08, top=1.6)
-            fig_ax.set_yticks([i / 5 for i in range(9)])
+            fig_ax.set_ylim(bottom=0.12, top=1.8)
+            fig_ax.set_yticks([i / 5 + 0.2 for i in range(9)])
         else:
             fig_ax.set_ylim(bottom=0.4, top=2.5)
             # fig_ax.set_ylim(bottom=-1.4, top=2)
-            fig_ax.set_yticks([0.5, 1, 1.5, 2, 2.5], labels=['', '1 core', '', '2 cores', ''])
+            fig_ax.set_yticks([0.5, 1, 1.5, 2, 2.5], labels=[
+                              '', '1 core', '', '2 cores', ''])
 
         fig_ax2.set_ylim(bottom=-5, top=100)
-        fig_ax2.set_yticks(range(0, 105, 25), labels=(f'{i}k' for i in range(0, 105, 25)))
+        fig_ax2.set_yticks(range(0, 105, 25), labels=(
+            f'{i}k' for i in range(0, 105, 25)))
 
         # fig_ax.set_yticks(range(0, 11, 1))
         # fig_ax.set_xticks(range(0, 80001, 5000), minor=True)
 
         # Save plot
         plt.tight_layout()
-        plt.savefig(f"{folder_path}/plot32_{run:d}{'A' if type_A else 'B'}.pdf")
+        plt.savefig(f"{folder_path}/plot4_{run:d}{'A' if type_A else 'B'}.pdf")
 
 
 if __name__ == '__main__':
-    plots43('.', 6, 3, 10, True)
-    plots43('.', 6, 3, 10, False)
+    # calc_stats('.', 6, 3, 10, '4.3', True)
 
-    plots43('../4.4', 6, 3, 10, True)
-    plots43('../4.4', 6, 3, 10, False)
+    # plots43('.', 6, 3, 10, '4.3', True)
+    # plots43('.', 6, 3, 10, '4.3', False)
+
+    # plots43('../4.4/5s_interval', 6, 3, 5, '4.4', True)
+    # plots43('../4.4/5s_interval', 6, 3, 5, '4.4', False)
+
+    # plots43('../4.4/3s_interval', 6, 3, 3, '4.4', True)
+    # plots43('../4.4/3s_interval', 6, 3, 3, '4.4', False)
+
+    calc_stats('../4.4/3s_interval', 6, 3, 3, '4.4', True)
+
+    # plots43('../4.4/2s_interval', 6, 1, 2, '4.4', True)

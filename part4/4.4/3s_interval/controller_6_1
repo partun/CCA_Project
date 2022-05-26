@@ -1,0 +1,195 @@
+Namespace(amt=2, high_qps_threshold=95, interval=0.3, low_qps_threshold=140, min_duration=4, mode=0, pid=18709)
+starting parsec_ferret...
+1653575451.7446198: high qps mode
+1653575456.0085158: low qps mode
+1653575463.8651838: high qps mode
+1653575468.1637564: low qps mode
+1653575479.041434: high qps mode
+1653575485.1099584: low qps mode
+1653575503.8068452: high qps mode
+1653575508.0885077: low qps mode
+1653575508.7381036: high qps mode
+1653575513.0157714: low qps mode
+1653575514.275577: high qps mode
+1653575518.574905: low qps mode
+1653575524.0375214: high qps mode
+1653575528.3068867: low qps mode
+1653575545.1985657: high qps mode
+1653575551.3478286: low qps mode
+1653575552.0022528: high qps mode
+1653575556.2784755: low qps mode
+1653575559.3482525: high qps mode
+1653575563.6173: low qps mode
+1653575602.1574738: high qps mode
+1653575606.448912: low qps mode
+1653575611.3104854: high qps mode
+1653575615.6229331: low qps mode
+1653575618.0788875: high qps mode
+1653575622.3516116: low qps mode
+1653575626.6132543: high qps mode
+1653575630.8982062: low qps mode
+1653575641.164331: high qps mode
+1653575645.4260356: low qps mode
+1653575647.2719452: high qps mode
+1653575652.742857: low qps mode
+1653575680.4509254: high qps mode
+1653575684.734309: low qps mode
+1653575685.9729712: high qps mode
+1653575690.2762945: low qps mode
+1653575694.5293016: high qps mode
+1653575698.809263: low qps mode
+1653575704.2714453: high qps mode
+1653575708.5523872: low qps mode
+1653575709.8011556: high qps mode
+1653575714.0678532: low qps mode
+1653575715.9168859: high qps mode
+1653575720.20593: low qps mode
+1653575721.4683504: high qps mode
+1653575725.772557: low qps mode
+1653575728.834172: high qps mode
+1653575733.1092422: low qps mode
+1653575764.4380746: high qps mode
+1653575768.7145984: low qps mode
+1653575772.9610746: high qps mode
+1653575777.2189035: low qps mode
+1653575794.094841: high qps mode
+1653575800.1636975: low qps mode
+1653575806.2196798: high qps mode
+1653575810.5362582: low qps mode
+1653575820.8102884: high qps mode
+1653575825.0823722: low qps mode
+1653575854.0004659: high qps mode
+1653575858.2723227: low qps mode
+1653575866.1466222: high qps mode
+1653575870.4181335: low qps mode
+1653575884.2979734: high qps mode
+1653575888.576559: low qps mode
+1653575889.2293866: high qps mode
+1653575893.5364943: low qps mode
+1653575923.0561883: high qps mode
+1653575927.3300228: low qps mode
+1653575941.2093213: high qps mode
+1653575950.3283367: low qps mode
+1653575950.9829407: high qps mode
+1653575955.259662: low qps mode
+1653575962.5159972: high qps mode
+1653575966.7968051: low qps mode
+1653575968.0517843: high qps mode
+1653575972.3354282: low qps mode
+1653575975.3960369: high qps mode
+1653575983.3334763: low qps mode
+1653575985.7837317: high qps mode
+parsec_ferret duration: 542.94s finished: {'Error': None, 'StatusCode': 0}
+starting parsec_freqmine...
+1653575990.101398: low qps mode
+1653576016.0192215: high qps mode
+1653576020.3394773: low qps mode
+1653576028.2029517: high qps mode
+1653576032.5167308: low qps mode
+1653576033.7610312: high qps mode
+1653576038.0386546: low qps mode
+1653576044.1325293: high qps mode
+1653576049.010726: low qps mode
+1653576058.0868332: high qps mode
+1653576062.341361: low qps mode
+1653576079.218101: high qps mode
+1653576083.4853475: low qps mode
+1653576094.3797946: high qps mode
+1653576098.7122238: low qps mode
+1653576102.9710848: high qps mode
+1653576107.264492: low qps mode
+1653576116.329298: high qps mode
+1653576121.3633776: low qps mode
+1653576141.8691044: high qps mode
+1653576150.940754: low qps mode
+1653576159.4055035: high qps mode
+1653576163.707827: low qps mode
+1653576175.1798334: high qps mode
+1653576179.4783125: low qps mode
+1653576180.7254772: high qps mode
+1653576187.4075441: low qps mode
+1653576194.0753803: high qps mode
+1653576198.4020655: low qps mode
+1653576226.1104822: high qps mode
+1653576230.3691845: low qps mode
+1653576231.0142703: high qps mode
+1653576235.4519353: low qps mode
+1653576243.9325488: high qps mode
+1653576250.0219176: low qps mode
+1653576256.081801: high qps mode
+1653576260.3685837: low qps mode
+1653576261.0181255: high qps mode
+1653576265.4640415: low qps mode
+1653576271.533168: high qps mode
+1653576275.8260577: low qps mode
+1653576277.0801835: high qps mode
+1653576281.347449: low qps mode
+1653576282.6022646: high qps mode
+1653576286.8836827: low qps mode
+1653576303.7726183: high qps mode
+1653576308.04244: low qps mode
+1653576308.704215: high qps mode
+1653576312.98233: low qps mode
+parsec_freqmine duration: 326.59s finished: {'Error': None, 'StatusCode': 0}
+starting parsec_cannel...
+parsec_cannel duration: 239.10s finished: {'Error': None, 'StatusCode': 0}
+starting parsec_blackscholes...
+1653576574.7085884: high qps mode
+1653576578.975581: low qps mode
+1653576592.2457907: high qps mode
+1653576596.351985: low qps mode
+1653576604.2225626: high qps mode
+1653576608.5268905: low qps mode
+1653576609.7727602: high qps mode
+1653576618.8772452: low qps mode
+1653576630.9530327: high qps mode
+1653576635.2922409: low qps mode
+1653576636.54755: high qps mode
+1653576640.8365326: low qps mode
+1653576654.7070599: high qps mode
+1653576658.9636354: low qps mode
+1653576661.4128728: high qps mode
+1653576665.6916347: low qps mode
+1653576669.9443376: high qps mode
+1653576674.2088025: low qps mode
+1653576682.072465: high qps mode
+1653576686.3544333: low qps mode
+1653576694.216156: high qps mode
+1653576698.6298518: low qps mode
+1653576699.2743511: high qps mode
+1653576703.5424428: low qps mode
+parsec_blackscholes duration: 160.92s finished: {'Error': None, 'StatusCode': 0}
+starting parsec_fft...
+fft threads: 3 -> 2
+1653576809.4642015: high qps mode
+1653576820.3682404: low qps mode
+parsec_fft duration: 128.08s finished: {'Error': None, 'StatusCode': 0}
+starting parsec_dedup...
+1653576849.2867029: high qps mode
+1653576854.1667693: low qps mode
+1653576858.4202688: high qps mode
+1653576862.688403: low qps mode
+1653576878.366324: high qps mode
+1653576882.6347191: low qps mode
+parsec_dedup duration: 47.23s finished: {'Error': None, 'StatusCode': 0}
+{'parsec_blackscholes': {'duration': 160.92010879516602,
+                         'end': 1653576714.6763625,
+                         'start': 1653576553.7562537},
+ 'parsec_cannel': {'duration': 239.10247206687927,
+                   'end': 1653576553.7561896,
+                   'start': 1653576314.6537175},
+ 'parsec_dedup': {'duration': 47.228272676467896,
+                  'end': 1653576889.9862783,
+                  'start': 1653576842.7580056},
+ 'parsec_ferret': {'duration': 542.9383726119995,
+                   'end': 1653575988.063192,
+                   'start': 1653575445.1248193},
+ 'parsec_fft': {'duration': 128.08142709732056,
+                'end': 1653576842.7578785,
+                'start': 1653576714.6764514},
+ 'parsec_freqmine': {'duration': 326.5904083251953,
+                     'end': 1653576314.6536536,
+                     'start': 1653575988.0632453},
+ 'total': {'duration': 1444.8615448474884,
+           'end': 1653576889.986335,
+           'start': 1653575445.1247902}}
