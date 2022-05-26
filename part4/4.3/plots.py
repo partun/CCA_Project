@@ -258,15 +258,13 @@ def plots43(folder_path: str, schedule: int, run_cnt: int, mcperf_interval: floa
 if __name__ == '__main__':
     # calc_stats('.', 6, 3, 10, '4.3', True)
 
-    # plots43('.', 6, 3, 10, '4.3', True)
-    # plots43('.', 6, 3, 10, '4.3', False)
+    plots43('.', 6, 3, 10, '4.3', True)
+    plots43('.', 6, 3, 10, '4.3', False)
 
-    # plots43('../4.4/5s_interval', 6, 3, 5, '4.4', True)
-    # plots43('../4.4/5s_interval', 6, 3, 5, '4.4', False)
+    plots43('../4.4/5s_interval', 6, 3, 5, '4.4', True)
+    plots43('../4.4/5s_interval', 6, 3, 5, '4.4', False)
 
-    # plots43('../4.4/3s_interval', 6, 3, 3, '4.4', True)
-    # plots43('../4.4/3s_interval', 6, 3, 3, '4.4', False)
+    plots43('../4.4/3s_interval', 6, 3, 3, '4.4', True)
+    plots43('../4.4/3s_interval', 6, 3, 3, '4.4', False)
 
-    calc_stats('../4.4/3s_interval', 6, 3, 3, '4.4', True)
-
-    # plots43('../4.4/2s_interval', 6, 1, 2, '4.4', True)
+    plots43('../4.4/2s_interval', 6, 1, 2, '4.4', True)

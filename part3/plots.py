@@ -1,4 +1,3 @@
-from cProfile import label, run
 from itertools import chain
 import pandas as pd
 from datetime import datetime, timedelta, time
@@ -70,7 +69,7 @@ def plot3a(run_index: int):
         )
         fig_ax.text(
             workload_times['start'][i],
-            0.1*j + 0.05,
+            0.1 * j + 0.05,
             f"  {workload_times['workload'][i]}: {workload_times['start'][i]:.0f}s",
             va='center',
             zorder=1
